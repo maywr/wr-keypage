@@ -2,75 +2,222 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>WR Script - Key Kamu</title>
+<title>WR Script — Key Kamu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    background: #0e0e10;
-    color: #fff;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+  :root{
+    --bg: #08080a;
+    --card: #111114;
+    --card-border: #1f1f24;
+    --accent: #e11d48;
+    --accent-dim: #e11d4826;
+    --accent-glow: #e11d4840;
+    --text: #f2f2f5;
+    --text-muted: #83838d;
+    --text-faint: #55555e;
+    --ok: #e11d48;
   }
-  .card {
-    background: #1a1a1d;
-    border: 1px solid #2c2c30;
-    border-left: 4px solid #58adff;
-    border-radius: 8px;
-    padding: 32px;
-    max-width: 420px;
-    text-align: center;
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(600px 420px at 50% 18%, var(--accent-dim), transparent 70%),
+      var(--bg);
+    font-family:'Inter', system-ui, sans-serif;
+    color:var(--text);
+    padding:24px;
   }
-  h1 { font-size: 20px; margin-bottom: 8px; }
-  p.sub { color: #999; font-size: 14px; margin-bottom: 20px; }
-  .key-box {
-    background: #0e0e10;
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 14px;
-    font-family: monospace;
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: #58adff;
-    margin-bottom: 16px;
-    word-break: break-all;
+
+  .card{
+    position:relative;
+    width:100%;
+    max-width:400px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.02),
+      0 30px 60px -20px rgba(0,0,0,0.6);
+    animation: rise .5s cubic-bezier(.16,1,.3,1) both;
   }
-  button {
-    background: #58adff;
-    color: #0e0e10;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
   }
-  button:active { transform: scale(0.97); }
-  .note { margin-top: 16px; font-size: 12px; color: #777; }
+
+  /* terminal-style top bar — nods to the "script" subject matter */
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:12px 16px;
+    background:#0c0c0f;
+    border-bottom:1px solid var(--card-border);
+  }
+  .dot{ width:8px; height:8px; border-radius:50%; background:#2a2a30; }
+  .titlebar span.label{
+    margin-left:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:.03em;
+  }
+
+  .body{ padding:34px 30px 28px; text-align:center; }
+
+  .badge{
+    width:44px; height:44px;
+    margin:0 auto 18px;
+    border-radius:12px;
+    background:var(--accent-dim);
+    border:1px solid #e11d4840;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .badge svg{ width:22px; height:22px; }
+
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:19px;
+    letter-spacing:-0.01em;
+    margin:0 0 8px;
+  }
+
+  p.sub{
+    color:var(--text-muted);
+    font-size:13.5px;
+    line-height:1.55;
+    margin:0 0 24px;
+  }
+  p.sub code{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    background:#1a1a1f;
+    border:1px solid var(--card-border);
+    color:#c9c9d1;
+    padding:2px 6px;
+    border-radius:5px;
+  }
+
+  .key-box{
+    position:relative;
+    background:#0a0a0d;
+    border:1px solid #26262c;
+    border-radius:10px;
+    padding:17px 16px;
+    margin-bottom:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    word-break:break-all;
+    transition:border-color .2s ease;
+  }
+  .key-box.copied{ border-color:var(--accent-glow); }
+
+  button{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:13px 20px;
+    border-radius:9px;
+    font-family:'Inter', sans-serif;
+    font-weight:500;
+    font-size:14px;
+    cursor:pointer;
+    transition:transform .12s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow:0 8px 20px -8px var(--accent-glow);
+  }
+  button:hover{ background:#c81640; }
+  button:active{ transform:scale(0.98); }
+  button svg{ width:16px; height:16px; flex-shrink:0; }
+
+  button.copied{ background:#1a1a1f; color:var(--text); box-shadow:none; }
+
+  .note{
+    margin-top:18px;
+    font-size:12px;
+    color:var(--text-faint);
+    line-height:1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card{ animation:none; }
+  }
 </style>
 </head>
 <body>
+
   <div class="card">
-    <h1>✅ Key Kamu Sudah Siap</h1>
-    <p class="sub">Copy key di bawah, lalu redeem di Discord pakai <code>/redeem</code></p>
-    <div class="key-box" id="keyBox">Loading...</div>
-    <button onclick="copyKey()">📋 Copy Key</button>
-    <p class="note">Key ini cuma bisa dipakai sekali. Jangan share ke orang lain.</p>
+    <div class="titlebar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="label">wr-script · key.exe</span>
+    </div>
+
+    <div class="body">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h1>Key Kamu Sudah Siap</h1>
+      <p class="sub">Copy key di bawah, lalu masukan diloader WR <code>/redeem</code></p>
+
+      <div class="key-box" id="keyBox">Loading...</div>
+
+      <button id="copyBtn" onclick="copyKey()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="btnLabel">Copy Key</span>
+      </button>
+
+      <p class="note">Key ini cuma bisa dipakai sekali. Jangan share ke orang lain.</p>
+    </div>
   </div>
 
 <script>
-  // Ambil key dari parameter URL (?key=XXXX)
   const params = new URLSearchParams(window.location.search);
   const key = params.get('key') || 'KEY_TIDAK_DITEMUKAN';
   document.getElementById('keyBox').textContent = key;
 
-  function copyKey() {
+  function copyKey(){
     navigator.clipboard.writeText(key);
-    alert('Key sudah dicopy!');
+
+    const btn = document.getElementById('copyBtn');
+    const label = document.getElementById('btnLabel');
+    const box = document.getElementById('keyBox');
+
+    label.textContent = 'Copied!';
+    btn.classList.add('copied');
+    box.classList.add('copied');
+
+    setTimeout(() => {
+      label.textContent = 'Copy Key';
+      btn.classList.remove('copied');
+      box.classList.remove('copied');
+    }, 1800);
   }
 </script>
+
 </body>
 </html>
