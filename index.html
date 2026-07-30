@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>WR Script - Key Kamu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    background: #0e0e10;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .card {
+    background: #1a1a1d;
+    border: 1px solid #2c2c30;
+    border-left: 4px solid #58adff;
+    border-radius: 8px;
+    padding: 32px;
+    max-width: 420px;
+    text-align: center;
+  }
+  h1 { font-size: 20px; margin-bottom: 8px; }
+  p.sub { color: #999; font-size: 14px; margin-bottom: 20px; }
+  .key-box {
+    background: #0e0e10;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 14px;
+    font-family: monospace;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #58adff;
+    margin-bottom: 16px;
+    word-break: break-all;
+  }
+  button {
+    background: #58adff;
+    color: #0e0e10;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:active { transform: scale(0.97); }
+  .note { margin-top: 16px; font-size: 12px; color: #777; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>✅ Key Kamu Sudah Siap</h1>
+    <p class="sub">Copy key di bawah, lalu redeem di Discord pakai <code>/redeem</code></p>
+    <div class="key-box" id="keyBox">Loading...</div>
+    <button onclick="copyKey()">📋 Copy Key</button>
+    <p class="note">Key ini cuma bisa dipakai sekali. Jangan share ke orang lain.</p>
+  </div>
+
+<script>
+  // Ambil key dari parameter URL (?key=XXXX)
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('key') || 'KEY_TIDAK_DITEMUKAN';
+  document.getElementById('keyBox').textContent = key;
+
+  function copyKey() {
+    navigator.clipboard.writeText(key);
+    alert('Key sudah dicopy!');
+  }
+</script>
+</body>
+</html>
